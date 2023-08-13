@@ -1,0 +1,172 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product[]
+}
+
+model Brand {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product[]
+}
+
+model ScreenSize {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product[]
+}
+
+model Storage {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product[]
+}
+
+model Ram {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product[]
+}
+
+model OperatingSystem {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product[]
+}
+
+model Order {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  productId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product   @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+}
+
+model Compare {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  productId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product   @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+}
+
+model Cart {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  productId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product   @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+}
+
+model Invoice {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  productId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product   @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Offers {
+  id        Int       @id @default(autoincrement())
+  name      String
+  discount  Float
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Product   Product[]
+}
+
+model Product {
+  id                Int             @id @default(autoincrement())
+  name              String
+  description       String
+  thumbnail         String
+  price             Float
+  discount          Float
+  categoryId        Int
+  brandId           Int
+  screenSizeId      Int
+  storageId         Int
+  ramId             Int
+  operatingSystemId Int
+  offerId           Int
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  deletedAt         DateTime?
+  category          Category        @relation(fields: [categoryId], references: [id])
+  brand             Brand           @relation(fields: [brandId], references: [id])
+  screenSize        ScreenSize      @relation(fields: [screenSizeId], references: [id])
+  storage           Storage         @relation(fields: [storageId], references: [id])
+  ram               Ram             @relation(fields: [ramId], references: [id])
+  operatingSystem   OperatingSystem @relation(fields: [operatingSystemId], references: [id])
+  offer             Offers          @relation(fields: [offerId], references: [id])
+  order             Order[]
+  compare           Compare[]
+  cart              Cart[]
+  invoice           Invoice[]
+
+  @@index([screenSizeId])
+  @@index([offerId])
+  @@index([operatingSystemId])
+  @@index([ramId])
+  @@index([storageId])
+  @@index([brandId])
+  @@index([categoryId])
+}

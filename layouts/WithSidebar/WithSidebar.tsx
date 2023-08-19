@@ -1,6 +1,6 @@
 import { Grid } from "@chakra-ui/react";
 import React from "react";
-import { Sidebar } from "../../lib/atoms/Sidebar/Sidebar";
+import { Sidebar } from "./Sidebar/Sidebar";
 import { styles } from "./styles";
 
 function WithSidebar({ children }: { children: React.ReactNode }) {

@@ -11,6 +11,6 @@ export const styles = {
     placeContent: "space-between",
     w: "full",
     gridColumnGap: commonStyles.gridGap,
-    gridTemplateColumns: "220px 1fr",
+    gridTemplateColumns: "320px 1fr",
   } as StyleProps,
 };

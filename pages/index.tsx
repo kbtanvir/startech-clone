@@ -1,11 +1,9 @@
 import Dashboard from "../features/dashboard/view/Index";
-import Header from "../features/home/Header/Index";
 import WithSidebar from "../layouts/WithSidebar/WithSidebar";
 
-export default function Index() {
+export default function HomePage() {
   return (
     <>
-      <Header />
       <WithSidebar>
         <Dashboard />
       </WithSidebar>

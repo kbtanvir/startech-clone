@@ -6,13 +6,13 @@ import { PrismaClient } from "@prisma/client";
 export const prisma = new PrismaClient();
 
 export class PrismaService {
-  constructor(private model: any) {
-    this.model = prisma[model];
+  constructor(private collection: any) {
+    this.collection = prisma[collection];
   }
 
   async getAll(req: any, res: any) {
     try {
-      const response = await this.model.findMany();
+      const response = await this.collection.findMany();
 
       return res.status(200).json(response, { success: true });
     } catch (error) {
@@ -24,7 +24,7 @@ export class PrismaService {
     const { id } = req.query;
 
     try {
-      const response = await this.model.findUnique({
+      const response = await this.collection.findUnique({
         where: {
           id: parseInt(id[0]),
         },
@@ -40,15 +40,11 @@ export class PrismaService {
     const { data } = req.body;
 
     try {
-      if (data.length > 0) {
-        response = await this.model.createMany({
-          data: req.body.data,
-        });
-      } else {
-        response = await this.model.create({
-          data,
-        });
-      }
+      response = await this.collection.createMany({
+        data: data.map((item: any) => ({
+          name: item.name,
+        })),
+      });
 
       return res.status(200).json(response, { success: true });
     } catch (error) {
@@ -59,7 +55,7 @@ export class PrismaService {
   async updateOne(req: any, res: any) {
     const { id } = req.query;
     try {
-      const response = await this.model.update({
+      const response = await this.collection.update({
         where: {
           id: parseInt(id[0]),
         },
@@ -76,7 +72,7 @@ export class PrismaService {
 
   async bulkUpdate(req: any, res: any) {
     try {
-      const response = await this.model.updateMany({
+      const response = await this.collection.updateMany({
         where: {
           id: req.body.id,
         },
@@ -93,7 +89,7 @@ export class PrismaService {
     const { id } = req.query;
 
     try {
-      const response = await this.model.delete({
+      const response = await this.collection.delete({
         where: {
           id: id[0],
         },
@@ -107,7 +103,7 @@ export class PrismaService {
 
   async bulkDelete(req: any, res: any) {
     try {
-      const response = await this.model.deleteMany(
+      const response = await this.collection.deleteMany(
         req.body.all
           ? {}
           : {

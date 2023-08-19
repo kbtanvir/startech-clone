@@ -5,14 +5,6 @@ import { HealthChart } from "./HealthChart/HealthChart";
 import { HeartRateChart } from "./HearthRate/Index";
 import { styles } from "./styles";
 
-export default function Dashboard() {
-  return (
-    <Grid {...styles.wrapper}>
-      <Column1 />
-    </Grid>
-  );
-}
-
 function SearchBox() {
   return (
     <Box>
@@ -80,3 +72,13 @@ function Column2() {
     </VStack>
   );
 }
+
+function Dashboard() {
+  return (
+    <Grid {...styles.wrapper}>
+      <Column1 />
+    </Grid>
+  );
+}
+
+export default Dashboard;
